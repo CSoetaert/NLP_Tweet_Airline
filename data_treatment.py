@@ -36,13 +36,11 @@ def tokenizer(text):
 
 
 
-
-
-
-tweet_id=columns['tweet_id']
-airline_sentiment=columns['airline_sentiment']
-text=columns['text']
-airline_sentiment_confidence=columns['airline_sentiment_confidence']
+data = charging_tweets()
+tweet_id=data['tweet_id']
+airline_sentiment=data['airline_sentiment']
+text=data['text']
+airline_sentiment_confidence=data['airline_sentiment_confidence']
 print(tweet_id[0])
 print(airline_sentiment[0])
 print(text[0])
