@@ -86,7 +86,6 @@ def tokenizer(text):
     :return: the list of words tokenized
     """
     # TODO : Modify it to fit to our new kind of data
-    # function to tokenize a text
     # first we get rid of the punctuation
     replace_punctuation = string.maketrans(string.punctuation, ' ' * len(string.punctuation))
     no_punct = text.translate(replace_punctuation)
