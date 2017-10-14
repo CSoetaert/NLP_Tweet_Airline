@@ -1,4 +1,9 @@
-
+"""
+Denisa Valentina Licu and Camille Soetaert october 2018
+Natural Language Processing Project
+Analyzing sentiment from Tweet about US Airlines
+Functions to classify our datas
+"""
 
 def countingWords(word_list,confidence_list):
     """
@@ -61,3 +66,29 @@ def compute_probabilities(words_count, vocabulary, total_nr_words, k_smoothing=0
             total_nr_words + vocabulary_size * k_smoothing)
 
     return WORDS_PROBABILITIES
+
+
+def compute_sentiment_probability(text_test, sentiment_probabilities):
+    final_probability = 0
+
+    for word in text_test:
+        if word in sentiment_probabilities:
+            final_probability += sentiment_probabilities.get(word)
+        else:
+            final_probability += sentiment_probabilities.get('<UNK>')
+
+    return final_probability
+
+
+def classify_sentiment(text_test, positive_probabilities, negative_probabilities, neutral_probabilities):
+    positive_prob = compute_sentiment_probability(text_test, positive_probabilities)
+    negative_prob = compute_sentiment_probability(text_test, negative_probabilities)
+    neutral_prob = compute_sentiment_probability(text_test, neutral_probabilities)
+    prob_list = [positive_prob, neutral_prob, negative_prob]
+    maxim = max(prob_list)
+    if positive_prob == maxim and negative_prob != maxim:
+        return "positive"
+    elif negative_prob == maxim and positive_prob != maxim:
+        return "negative"
+    else:
+        return "neutral"
