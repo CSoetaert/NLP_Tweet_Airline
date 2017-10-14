@@ -60,9 +60,9 @@ def sorting_tweets_by_sentiment(data):
     tweets = data['text']
     sent_list = list_values(sentiment)
     dict_sorted_tweet = {s: [] for s in sent_list}
-    for tweet_no in range(len(data['airline_sentiment'])) :
+    for tweet_no in range(len(data['airline_sentiment'])):
         for sent in sent_list:
-            if sentiment[tweet_no] == sent :
+            if sentiment[tweet_no] == sent:
                 dict_sorted_tweet[sent].append(tweets[tweet_no])
     return dict_sorted_tweet
 
