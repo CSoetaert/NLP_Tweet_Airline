@@ -4,6 +4,10 @@ Natural Language Processing Project
 Analyzing sentiment from Tweet about US Airlines
 Functions to classify our datas
 """
+import data_treatment
+from math import log
+
+N_VOC = 50
 
 def countingWords(word_list,confidence_list):
     """
@@ -17,12 +21,12 @@ def countingWords(word_list,confidence_list):
     dict_count_confidence = {}
     for i in range(len(word_list)):
         for j in range(len(word_list[i])):
-            if word_list[i, j] in dict_count.keys():
-                dict_count[word_list[i, j]] += 1
-                dict_count_confidence[word_list[i, j]] += confidence_list[i]
+            if word_list[i][j] in dict_count.keys():
+                dict_count[word_list[i][j]] += 1
+                dict_count_confidence[word_list[i][j]] += confidence_list[i]
             else:
-                dict_count.update({word_list[i, j]: 1})
-                dict_count_confidence.update({word_list[i, j]: confidence_list[i]})
+                dict_count.update({word_list[i][j]: 1})
+                dict_count_confidence.update({word_list[i][j]: confidence_list[i]})
     return dict_count, dict_count_confidence
 
 
@@ -66,6 +70,39 @@ def compute_probabilities(words_count, vocabulary, total_nr_words, k_smoothing=0
             total_nr_words + vocabulary_size * k_smoothing)
 
     return WORDS_PROBABILITIES
+
+
+def train(training_data, threshold_voc=N_VOC):
+    # sorting the tweets by sentiment
+    pos_tweet, pos_confidence, neu_tweet, neu_confidence, neg_tweet, neg_confidence = data_treatment.sorting_tweets_by_sentiment(training_data)
+    # tokenizing the tweets
+    for i in range(len(pos_tweet)):
+        pos_tweet[i] = data_treatment.tokenizer(pos_tweet[i])
+    for i in range(len(neu_tweet)):
+        neu_tweet[i] = data_treatment.tokenizer(neu_tweet[i])
+    for i in range(len(neg_tweet)):
+        neg_tweet[i] = data_treatment.tokenizer(neg_tweet[i])
+    # making the vocabulary
+    dict_pos_count, dict_pos_count_confidence = countingWords(pos_tweet, pos_confidence)
+    dict_neu_count, dict_neu_count_confidence = countingWords(neu_tweet, neu_confidence)
+    dict_neg_count, dict_neg_count_confidence = countingWords(neg_tweet, neg_confidence)
+    pos_voc = makeVocabulary(dict_pos_count,threshold_voc)
+    neu_voc = makeVocabulary(dict_neu_count, threshold_voc)
+    neg_voc = makeVocabulary(dict_neg_count, threshold_voc)
+    # computing probabilities
+    nb_pos_word = 0
+    for key in dict_pos_count.keys():
+        nb_pos_word += dict_pos_count[key]
+    pos_prob = compute_probabilities(dict_pos_count,pos_voc,nb_pos_word,1)
+    nb_neu_word = 0
+    for key in dict_neu_count.keys():
+        nb_neu_word += dict_neu_count[key]
+    neu_prob = compute_probabilities(dict_neu_count, neu_voc, nb_neu_word, 1)
+    nb_neg_word = 0
+    for key in dict_neg_count.keys():
+        nb_neg_word += dict_neg_count[key]
+    neg_prob = compute_probabilities(dict_neg_count, neg_voc, nb_neg_word, 1)
+    return pos_prob, neu_prob, neg_prob
 
 
 def compute_sentiment_probability(text_test, sentiment_probabilities):

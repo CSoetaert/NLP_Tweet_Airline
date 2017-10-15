@@ -37,14 +37,29 @@ def evaluation(real_sentiments,compute_sentiments):
                 np+=1
             elif compute_sentiments[i]=="negative" and real_sentiments[i]=="neutral":
                 nne+=1
-    accuracy=(pp+nn+nene)/(pp+pn+pne+np+nn+nne+nep+nen+nene)
-    precision_positive=pp/(pp+pne+pn)
-    precision_negative=nn/(nn+np+nne)
-    precision_neutral=nene/(nene+nep+nen)
-    recall_positive=pp/(pp+nep+np)
-    recall_negative=nn/(nn+pn+nen)
-    recall_neutral=nene/(nene+pne+nne)
-    f_positive=(2*precision_positive*recall_positive)/(precision_positive+recall_positive)
-    f_negative=(2*precision_negative*recall_negative)/(precision_negative+recall_negative)
-    f_neutral=(2*precision_neutral*recall_neutral)/(precision_neutral+recall_neutral)
+    print pp,nep,np,pne,nene,nne,pn,nen,nn
+    accuracy = float(pp+nn+nene)/float(pp+pn+pne+np+nn+nne+nep+nen+nene)
+    print accuracy
+    precision_positive = float(pp)/float(pp+pne+pn)
+    precision_negative = float(nn)/float(nn+np+nne)
+    precision_neutral = float(nene)/float(nene+nep+nen)
+    recall_positive = float(pp)/float(pp+nep+np)
+    recall_negative = float(nn)/float(nn+pn+nen)
+    recall_neutral = float(nene)/float(nene+pne+nne)
+
+    if precision_positive+recall_positive != 0.:
+        f_positive=(2*precision_positive*recall_positive)/(precision_positive+recall_positive)
+    else:
+        f_positive = "precision + recall positive = 0"
+
+    if precision_negative+recall_negative != 0.:
+        f_negative=(2*precision_negative*recall_negative)/(precision_negative+recall_negative)
+    else:
+        f_negative = "precision + recall negative = 0"
+
+    if precision_neutral+recall_neutral != 0.:
+        f_neutral=(2*precision_neutral*recall_neutral)/(precision_neutral+recall_neutral)
+    else:
+        f_neutral = "precision + recall neutral = 0"
+
     return accuracy,precision_positive,precision_negative,precision_neutral,recall_positive,recall_negative,recall_neutral,f_positive,f_negative,f_neutral

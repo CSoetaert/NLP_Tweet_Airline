@@ -9,6 +9,7 @@ import csv
 from collections import defaultdict
 
 
+
 def charging_tweets():
     """
     Function to charge and store the tweets from the dataset.
@@ -42,9 +43,10 @@ def add_not(splitted_text):
     :param splitted_text: text splitted by word
     :return: the list of the word of the sentence with the punctuation
     """
+    FINAL_SENTENCE_PUNCTUATION = ["!", "?", ".", ",", ";"]
     for i in range(0, len(splitted_text)):
         if splitted_text[i]=="not":
-            while(not(splitted_text[i+1] in FINAL_SENTENCE_PUNCTUATION)):
+            while(i+1<len(splitted_text) and not(splitted_text[i+1] in FINAL_SENTENCE_PUNCTUATION)):
                 splitted_text[i+1]="NOT"+splitted_text[i+1]
                 i+=1
     return splitted_text
