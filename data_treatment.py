@@ -8,7 +8,7 @@ import string
 import csv
 from collections import defaultdict
 
-
+ADD_NOT = False
 
 def charging_tweets():
     """
@@ -73,7 +73,8 @@ def tokenizer(text):
     text = text.lower()
     text = text.split(' ')
     text = replace_mention(text)
-    text = add_not(text)
+    if ADD_NOT:
+        text = add_not(text)
     replace_punctuation = string.maketrans(string.punctuation, ' ' * len(string.punctuation))
     for i in range(len(text)):
         text[i] = text[i].translate(replace_punctuation)
@@ -88,7 +89,6 @@ def sorting_tweets_by_sentiment(data):
     :return: the list of positive tweets, the list of the confidence of the positive tweet and the same lists for
     neutral and negative tweets
     """
-    # TODO : modify so that the confidence is considered
     sentiment = data['airline_sentiment']
     tweets = data['text']
     confidence = data['airline_sentiment_confidence']

@@ -8,6 +8,7 @@ import data_treatment
 from math import log
 
 N_VOC = 50
+WITH_CONFIDENCE = True
 
 def countingWords(word_list,confidence_list):
     """
@@ -86,9 +87,14 @@ def train(training_data, threshold_voc=N_VOC):
     dict_pos_count, dict_pos_count_confidence = countingWords(pos_tweet, pos_confidence)
     dict_neu_count, dict_neu_count_confidence = countingWords(neu_tweet, neu_confidence)
     dict_neg_count, dict_neg_count_confidence = countingWords(neg_tweet, neg_confidence)
-    pos_voc = makeVocabulary(dict_pos_count,threshold_voc)
-    neu_voc = makeVocabulary(dict_neu_count, threshold_voc)
-    neg_voc = makeVocabulary(dict_neg_count, threshold_voc)
+    if WITH_CONFIDENCE:
+        pos_voc = makeVocabulary(dict_pos_count_confidence, threshold_voc)
+        neu_voc = makeVocabulary(dict_pos_count_confidence, threshold_voc)
+        neg_voc = makeVocabulary(dict_pos_count_confidence, threshold_voc)
+    else:
+        pos_voc = makeVocabulary(dict_pos_count, threshold_voc)
+        neu_voc = makeVocabulary(dict_pos_count, threshold_voc)
+        neg_voc = makeVocabulary(dict_pos_count, threshold_voc)
     # computing probabilities
     nb_pos_word = 0
     for key in dict_pos_count.keys():
