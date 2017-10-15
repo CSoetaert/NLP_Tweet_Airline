@@ -37,9 +37,7 @@ def evaluation(real_sentiments,compute_sentiments):
                 np+=1
             elif compute_sentiments[i]=="negative" and real_sentiments[i]=="neutral":
                 nne+=1
-    print pp,nep,np,pne,nene,nne,pn,nen,nn
     accuracy = float(pp+nn+nene)/float(pp+pn+pne+np+nn+nne+nep+nen+nene)
-    print accuracy
     precision_positive = float(pp)/float(pp+pne+pn)
     precision_negative = float(nn)/float(nn+np+nne)
     precision_neutral = float(nene)/float(nene+nep+nen)

@@ -8,7 +8,7 @@ import string
 import csv
 from collections import defaultdict
 
-ADD_NOT = False
+ADD_NOT = True
 
 def charging_tweets():
     """
@@ -37,18 +37,44 @@ def list_values(inputlist):
     return list(values)
 
 
+def check_punctuation_within_word(word):
+    FINAL_SENTENCE_PUNCTUATION = ["!", "?", ".", ",", ";"]
+    boolean=False
+    for p in FINAL_SENTENCE_PUNCTUATION:
+        if p in word:
+            boolean=True
+    return boolean
+
+def check_punctuation_alone(word):
+    FINAL_SENTENCE_PUNCTUATION = ["!", "?", ".", ",", ";"]
+    boolean=False
+    if word in FINAL_SENTENCE_PUNCTUATION:
+        boolean=True
+    return boolean
+
+def check_NOT(word):
+    NOT_WORDS = ["not", "n't", "cannot"]
+    boolean=False
+    for n in NOT_WORDS:
+        if n in word:
+            boolean=True
+    return boolean
+
 def add_not(splitted_text):
     """
     Function to add 'NOT' before a word in a negative sentence.
     :param splitted_text: text splitted by word
     :return: the list of the word of the sentence with the punctuation
     """
-    FINAL_SENTENCE_PUNCTUATION = ["!", "?", ".", ",", ";"]
     for i in range(0, len(splitted_text)):
-        if splitted_text[i]=="not":
-            while(i+1<len(splitted_text) and not(splitted_text[i+1] in FINAL_SENTENCE_PUNCTUATION)):
+
+        if check_NOT(splitted_text[i])==True:
+            while(i+1<len(splitted_text) and check_punctuation_alone(splitted_text[i+1])==False ):
                 splitted_text[i+1]="NOT"+splitted_text[i+1]
-                i+=1
+                if(check_punctuation_within_word(splitted_text[i+1])==True):
+                    break;
+                else:
+                    i+=1
     return splitted_text
 
 
