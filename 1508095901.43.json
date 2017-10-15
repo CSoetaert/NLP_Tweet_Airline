@@ -1,0 +1,7 @@
+{
+    "mean fneg": 0.0049978886482334355, 
+    "mean accuracy": 0.25416666666666665, 
+    "mean fpos": 0.3590338779349115, 
+    "description": "voc 25, without confidence, with not", 
+    "mean fneu": 0.3703537475241789
+}

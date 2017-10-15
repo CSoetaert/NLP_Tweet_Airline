@@ -7,7 +7,7 @@ import classifier
 import evaluation
 import data_treatment
 import json
-import datetime
+import time
 import numpy as np
 
 # Separating the data and treat it
@@ -54,8 +54,8 @@ mean_fpos = np.mean(np.array(fpos))
 mean_fneg = np.mean(np.array(fneg))
 mean_fneu = np.mean(np.array(fneu))
 
-experiment_description = "test"
-with open(str(datetime.datetime.now())+".json", "w") as outfile:
+experiment_description = "voc 25, with confidence, without not"
+with open(str(time.time())+".json", "w") as outfile:
     to_dump = {"description": experiment_description, "mean accuracy": mean_acc, "mean fpos": mean_fpos, "mean fneg": mean_fneg, "mean fneu": mean_fneu}
     json.dump(to_dump, outfile, indent=4)
 print "finished"
