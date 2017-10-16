@@ -8,7 +8,7 @@ import string
 import csv
 from collections import defaultdict
 
-ADD_NOT = False
+ADD_NOT = True
 
 def charging_tweets():
     """
@@ -128,15 +128,4 @@ def sorting_tweets_by_sentiment(data):
                 dict_sorted_confidence[sent].append(confidence[tweet_no])
     return dict_sorted_tweet['positive'], dict_sorted_confidence['positive'], dict_sorted_tweet['neutral'], dict_sorted_confidence['neutral'], dict_sorted_tweet['negative'], dict_sorted_confidence['negative']
 
-# """ TESTING ZONE """
-# data = charging_tweets()
-# tweet_id = data['tweet_id']
-# airline_sentiment = data['airline_sentiment']
-# text = data['text']
-# airline_sentiment_confidence=data['airline_sentiment_confidence']
-# print(tweet_id[0])
-# print(airline_sentiment[0])
-# print(text[0])
-# print(tokenizer(text[0]))
-# print list_values(airline_sentiment)
-# print(airline_sentiment_confidence[0])
+

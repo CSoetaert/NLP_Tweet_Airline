@@ -8,7 +8,7 @@ import data_treatment
 from math import log
 
 N_VOC = 25
-WITH_CONFIDENCE = True
+WITH_CONFIDENCE = False
 
 def countingWords(word_list,confidence_list):
     """
@@ -23,10 +23,10 @@ def countingWords(word_list,confidence_list):
     for i in range(len(word_list)):
         for j in range(len(word_list[i])):
             if word_list[i][j] in dict_count.keys():
-                dict_count[word_list[i][j]] += 1
+                dict_count[word_list[i][j]] += 1.
                 dict_count_confidence[word_list[i][j]] += confidence_list[i]
             else:
-                dict_count.update({word_list[i][j]: 1})
+                dict_count.update({word_list[i][j]: 1.})
                 dict_count_confidence.update({word_list[i][j]: confidence_list[i]})
     return dict_count, dict_count_confidence
 
@@ -64,7 +64,7 @@ def compute_probabilities(words_count, vocabulary, total_nr_words, k_smoothing=0
             if (word == word_voc):
                 WORDS_PROBABILITIES[word] = words_count.get(word)
             else:
-                WORDS_PROBABILITIES['<UNK>'] = WORDS_PROBABILITIES.get('<UNK>') + 1
+                WORDS_PROBABILITIES['<UNK>'] = WORDS_PROBABILITIES.get('<UNK>') + 1.
                 # compute probability for each word in vocabulary + <UNK> words
     for word in WORDS_PROBABILITIES:
         WORDS_PROBABILITIES[word] = log(WORDS_PROBABILITIES[word] + k_smoothing) - log(
