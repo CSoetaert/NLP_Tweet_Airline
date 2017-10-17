@@ -8,7 +8,7 @@ import string
 import csv
 from collections import defaultdict
 
-ADD_NOT = True
+ADD_NOT = False
 
 def charging_tweets():
     """

@@ -35,7 +35,7 @@ for i in range(0, 5):
     training_data['airline_sentiment_confidence'] = k_data[(i + 1) % 5]['airline_sentiment_confidence'] + k_data[(i + 2) % 5]['airline_sentiment_confidence'] + k_data[(i + 3) % 5]['airline_sentiment_confidence'] + k_data[(i + 4) % 5]['airline_sentiment_confidence']
 
     # training the classifier
-    pos_prob, neu_prob, neg_prob = classifier.train(training_data, 25)
+    pos_prob, neu_prob, neg_prob = classifier.train(training_data)
     # testing
     test_sentiment = []
     for i in range(len(test_data['text'])):
@@ -53,8 +53,10 @@ mean_acc = np.mean(np.array(accuracy))
 mean_fpos = np.mean(np.array(fpos))
 mean_fneg = np.mean(np.array(fneg))
 mean_fneu = np.mean(np.array(fneu))
-
-experiment_description = "voc 25, without confidence, with not"
+print sorted(neg_prob, key=neg_prob.__getitem__)
+print sorted(pos_prob, key=pos_prob.__getitem__)
+print sorted(neu_prob, key=neu_prob.__getitem__)
+experiment_description = "voc 100, with confidence, without not"
 with open(str(time.time())+".json", "w") as outfile:
     to_dump = {"description": experiment_description, "mean accuracy": mean_acc, "mean fpos": mean_fpos, "mean fneg": mean_fneg, "mean fneu": mean_fneu}
     json.dump(to_dump, outfile, indent=4)

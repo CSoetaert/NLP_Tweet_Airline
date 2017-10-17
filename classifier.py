@@ -8,7 +8,7 @@ import data_treatment
 from math import log
 
 N_VOC = 25
-WITH_CONFIDENCE = False
+WITH_CONFIDENCE = True
 
 def countingWords(word_list,confidence_list):
     """
